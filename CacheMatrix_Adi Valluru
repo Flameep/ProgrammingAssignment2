@@ -1,18 +1,18 @@
 makeCacheMatrix <- function(x = matrix()) {
   ## First function, does the following four things:
-  ##  1) Sets a matrix
-  ##  2) Gets a matrix
-  ##  3) Sets an inverse of the matrix
-  ##  4) Gets said inverse
   ## x defines an invertible matrix
   inv = NULL
   set = function(y) {
     x <<- y
     inv <<- NULL
   }
+  ##  1) Sets a matrix
   get = function() x
+  ##  2) Gets a matrix
   setinv = function(inverse) inv <<- inverse
+  ##  3) Sets an inverse of the matrix; <<- used to assign inv as inverse in the subfunction environment
   getinv = function() inv
+  ##  4) Gets said inverse
   list(set=set, get=get, setinv=setinv, getinv=getinv)
 }
 
@@ -24,10 +24,10 @@ cacheSolve <- function(x, ...) {
     return(inv)
   }
   ## Above subfunction gets results from the cache IF the inverse has already been calculated, skipping computation
+  ## Otherwise, still computes the inverse if not, using the code below
   mat.data = x$get()
   inv = solve(mat.data, ...)
   x$setinv(inv)
   ## Sets inverse's value in the cache with setinv() function
   return(inv)
-  ## Returns an inverse of the original matrix inputted through makeCacheMatrix()
 }
